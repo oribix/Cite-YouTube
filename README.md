@@ -14,3 +14,6 @@ git clone https://github.com/oribix/Cite-YouTube.git
 npm i
 tsc
 ```
+
+You must provide a valid google API key in the `GoogleAPIKey` file.
+https://developers.google.com/youtube/v3/getting-started
