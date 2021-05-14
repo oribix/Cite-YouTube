@@ -1,10 +1,8 @@
 // eslint-disable-next-line camelcase
 import {google, youtube_v3 as youtube} from 'googleapis';
 import {format, URL, URLSearchParams} from 'url';
+import {read, readFile} from 'fs-extra'
 // import process from 'process';
-
-// Todo: DELETE ME
-const API_KEY = 'AIzaSyB-G0avxZ15_aRaBeQUWDXJOUbP2JVu1M4';
 
 /**
  * entry point
@@ -46,6 +44,7 @@ async function citeYoutube(youtubeUrl: string): Promise<string> {
  * @param {string} url youtube video URL
  */
 async function getVideoData(url: string) {
+  const API_KEY = await getAPIKey()
   const auth = google.auth.fromAPIKey(API_KEY);
   const service = google.youtube('v3');
   const results = await service.videos.list({
@@ -68,6 +67,10 @@ async function getVideoData(url: string) {
     date: formatYoutubeDate(publishedAt) || 'no date',
     url: sanitizeYoutubeUrl(url),
   };
+}
+
+async function getAPIKey() {
+  return readFile('GoogleAPIKey', 'utf-8');
 }
 
 /**
